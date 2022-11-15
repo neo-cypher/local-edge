@@ -10,7 +10,7 @@ Clean=False
 Source="Github"
 CurrentRepo="notset"
 ProjectRoot="$( cd "$( dirname "${BASH_SOURCE[0]}"   )" >/dev/null 2>&1 && pwd   )"
-CloneRepos=("storj" "gateway-mt" "tardigrade-satellite-theme" "gateway-st")
+CloneRepos=("storj" "gateway-mt" "private" "common" "uplink")
 
 while getopts "hec" arg; do
 	case $arg in
@@ -64,31 +64,19 @@ for val in "${CloneRepos[@]}"; do
 			echo "Cloning ${CurrentRepo} using gerrit support scripts"
 			curl -sSL storj.io/clone | sh -s "${CurrentRepo}"
 		fi
-		# check the Current Repo, if we are cloning gateway-mt then checkout tag1.8.0
-		if [[ "${CurrentRepo}" == "gateway-mt" ]]; then
-			cd "${CurrentRepo}"
-			git checkout tags/v1.8.0
-		fi
 	fi
 
 	echo "Clean the environment: ${Clean}"
 	if [[ $Clean == "True" ]]; then
 		cd "${ProjectRoot}/${CurrentRepo}"
-		go clean -i all
+		go clean --modcache
 	fi
 
-	echo "Installing ${CurrentRepo}..."
-	if [[ -d "${ProjectRoot}/${CurrentRepo}/cmd/" ]]; then
-		echo "${CurrentRepo} has cmd directory"
+	echo	"Installing ${CurrentRepo}..."
+	if [[ -e "${ProjectRoot}/${CurrentRepo}/go.mod" ]]; then
+		echo "${CurrentRepo} has a go.mod file"
 		cd "${ProjectRoot}/${CurrentRepo}/"
 		go install -v ./...
-	elif [[ "${CurrentRepo}" == "gateway-st" ]]; then
-		cd "${ProjectRoot}/${CurrentRepo}"
-		go install -v ./...
-	else
-		echo "${CurrentRepo} doesn't contain a cmd directory."
-		# Tardigrade Branding
-		# cp -r "${ProjectRoot}/tardigrade-satellite-theme/europe-west-1/*" "${ProjectRoot}/storj/web/satellite/"
 	fi
 	cd $ProjectRoot
 done

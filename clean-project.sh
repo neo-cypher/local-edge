@@ -5,7 +5,7 @@ set -o pipefail
 trap traperr err
 
 CurrentFolder="notset"
-Folders=("gateway-mt" "tardigrade-satellite-theme" "gateway-st")
+Folders=("storj" "gateway-mt" "private" "common" "uplink")
 
 while getopts "a" arg; do
 	case $arg in
@@ -24,7 +24,10 @@ traperr() {
 for val in "${Folders[@]}"; do
 	CurrentFolder=$val
 	if [[ -d "./${CurrentFolder}" ]]; then
-		echo "Folder Found, deleting ${CurrentFolder}."
+		echo "Folder Found, cleaning first then deleting ${CurrentFolder}."
+		cd "${CurrentFolder}"
+		go clean --modcache
+		cd ..
 		rm -rf $CurrentFolder
 	fi
 done
