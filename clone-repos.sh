@@ -8,12 +8,12 @@ trap traperr err
 Environment=Test
 Clean=False
 Source="Github"
-Branded=False
+Branded="False"
 CurrentRepo="notset"
 ProjectRoot="$( cd "$( dirname "${BASH_SOURCE[0]}"   )" >/dev/null 2>&1 && pwd   )"
 CloneRepos=("storj" "gateway-mt" "private" "common" "uplink")
 
-while getopts "hec" arg; do
+while getopts "hecb" arg; do
 	case $arg in
 		h)
 			Help
@@ -25,7 +25,8 @@ while getopts "hec" arg; do
 			Clean="True"
 			;;
         b)
-            Branded=True
+            Branded="True"
+            ;;
 	esac
 done
 
@@ -84,9 +85,9 @@ for val in "${CloneRepos[@]}"; do
 	fi
 	cd $ProjectRoot
 
-    if [[$Branded == True]]; then
-        echo "Cloning tardigrade satellite theme for the branded web ui"
-        git clone git@github.com:storj/tardigrade-satellite-theme.git
-    fi
-
 done
+
+    if [[ $Branded == "True" ]]; then
+        echo "Cloning tardigrade satellite theme for the branded web ui"
+        git clone "git@github.com:storj/tardigrade-satellite-theme.git"
+    fi
