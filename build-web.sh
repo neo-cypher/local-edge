@@ -11,15 +11,26 @@ traperr() {
 }
 trap traperr err
 
+function buildWeb() {
+    local filePath="$1"
+    local fullPath="${Location}/${filePath}"
+
+    echo "changing directory to ${fullPath}"
+    cd "${fullPath}"
+    echo "Building Web UI"
+    npm install --prefer-offline --no-audit --loglevel error
+    npm run build
+    echo "Web UI Build Completed"
+}
+
 echo "Building satellite web ui"
-cd "${Location}/storj/web/satellite/"
-npm install
-npm run build
+buildWeb "storj/web/satellite/"
 
 echo "Building storagenode web ui"
-cd "${Location}/storj/web/storagenode/"
-npm install
-npm run build
+buildWeb "storj/web/storagenode/"
+
+echo "Building multinode storagenode dashboard"
+buildWeb "storj/web/multinode"
 
 echo "Building WASM"
 # Generate WASM
