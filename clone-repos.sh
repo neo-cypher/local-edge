@@ -4,7 +4,7 @@ set -o pipefail
 
 trap traperr err
 
-export GOBIN=~/go/bin
+# export GOBIN=~/go/bin
 Environment=Test
 Clean=False
 Source="Github"

@@ -20,4 +20,6 @@
 # Temp directories
 **/storj
 **/gateway-mt
-**/tardigrade-satellite-theme
+**/uplink
+**/common
+**/private
