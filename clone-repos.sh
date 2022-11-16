@@ -8,6 +8,7 @@ trap traperr err
 Environment=Test
 Clean=False
 Source="Github"
+Branded=False
 CurrentRepo="notset"
 ProjectRoot="$( cd "$( dirname "${BASH_SOURCE[0]}"   )" >/dev/null 2>&1 && pwd   )"
 CloneRepos=("storj" "gateway-mt" "private" "common" "uplink")
@@ -23,6 +24,8 @@ while getopts "hec" arg; do
 		c)
 			Clean="True"
 			;;
+        b)
+            Branded=True
 	esac
 done
 
@@ -31,10 +34,11 @@ Help()
 	Usage
 	# echo "Add description of the script functions here."
 	echo
-	echo "Syntax: ${0} [-e|c|h]"
+	echo "Syntax: ${0} [-e|c|h|b]"
 	echo "options:"
 	echo "e		Force environment to dev"
 	echo "c     Clean environemnt(delete binaries and remove local dependant packages)."
+    echo "b     Installs the OEM Branded Web UI from the tardigrade-satellite-theme repo"
 	echo
 }
 
@@ -79,4 +83,10 @@ for val in "${CloneRepos[@]}"; do
 		go install -v ./...
 	fi
 	cd $ProjectRoot
+
+    if [[$Branded == True]]; then
+        echo "Cloning tardigrade satellite theme for the branded web ui"
+        git clone git@github.com:storj/tardigrade-satellite-theme.git
+    fi
+
 done
