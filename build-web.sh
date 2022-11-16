@@ -24,6 +24,7 @@ function buildWeb() {
 }
 
 if [[ -d "${Location}/tardigrade-satellite-theme" ]]; then
+    echo "Copying branded satellite ui"
     cp -r ${Location}/tardigrade-satellite-theme/us-central-1/ ${Location}/storj/web/satellite/
 fi
 
