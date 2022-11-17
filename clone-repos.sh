@@ -11,7 +11,7 @@ Source="Github"
 Branded="False"
 CurrentRepo="notset"
 ProjectRoot="$( cd "$( dirname "${BASH_SOURCE[0]}"   )" >/dev/null 2>&1 && pwd   )"
-CloneRepos=("storj" "gateway-mt" "private" "common" "uplink")
+CloneRepos=("storj" "gateway-mt" "private" "common" "uplink" "gateway")
 
 while getopts "hecb" arg; do
 	case $arg in
