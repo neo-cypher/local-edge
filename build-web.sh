@@ -23,6 +23,11 @@ function buildWeb() {
     echo "Web UI Build Completed"
 }
 
+if [[ -d "${Location}/tardigrade-satellite-theme" ]]; then
+    echo "Copying branded satellite ui"
+    cp -r ${Location}/tardigrade-satellite-theme/us-central-1/ ${Location}/storj/web/satellite/
+fi
+
 echo "Building satellite web ui"
 buildWeb "storj/web/satellite/"
 
