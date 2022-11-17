@@ -5,7 +5,7 @@ set -o pipefail
 trap traperr err
 
 CurrentFolder="notset"
-Folders=("storj" "gateway-mt" "private" "common" "uplink")
+Folders=("gateway-mt" "private" "common" "uplink" "tardigrade-satellite-theme")
 
 while getopts "a" arg; do
 	case $arg in
