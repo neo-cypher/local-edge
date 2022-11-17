@@ -23,3 +23,6 @@
 **/uplink
 **/common
 **/private
+**/cockroach-v21.1.7.linux-amd64/
+**/gateway
+**/tardigrade-satellite-theme
